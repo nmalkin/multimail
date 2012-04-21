@@ -1,4 +1,4 @@
-                        MultiMail
+MultiMail:
 ===========================================================
 a primitive mail merge for email, using [Mutt][] and Python
 -----------------------------------------------------------
@@ -71,9 +71,9 @@ in the current directory:
 
 Any of these can be changed by running the script with the following flags: 
 
-- configuration file: -c/--config
-- recipients file: -r/--recipients
-- message file: -m/--message
+- configuration file: `-c/--config`
+- recipients file: `-r/--recipients`
+- message file: `-m/--message`
 
 If you want to suppress any output from the script, you can run with the
 `-s/--silent` flag.
