@@ -108,8 +108,16 @@ def multimail(config_filename, personalization_filename, message_filename):
     (subject, cc, bcc, attachment) = get_options(config_filename)
 
     for recipient in personalizations:
-        personalized_message = personalize_message(message, recipient)
+        # The first column for each recipient is the email address.
         address = recipient[0]
+
+        # Personalize message
+        personalized_message = personalize_message(message, recipient)
+
+        # The same pattern matching is applied to the attachment.
+        attachment = personalize_message(attachment, personalizations)
+
+        # Send the message!
         send_message(personalized_message, subject, address, cc, bcc, attachment)
         
 def main():
