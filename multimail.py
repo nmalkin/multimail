@@ -115,7 +115,8 @@ def multimail(config_filename, personalization_filename, message_filename):
         personalized_message = personalize_message(message, recipient)
 
         # The same pattern matching is applied to the attachment.
-        attachment = personalize_message(attachment, personalizations)
+        if attachment != '':
+            attachment = personalize_message(attachment, personalizations)
 
         # Send the message!
         send_message(personalized_message, subject, address, cc, bcc, attachment)
