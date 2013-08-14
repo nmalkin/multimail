@@ -15,7 +15,7 @@ DEFAULT_RECIPIENTS_FILE = 'recipients.csv'
 DEFAULT_MESSAGE_FILE = 'message.txt'
 
 # Commands
-CMD = 'mutt -s "%(subject)s" %(extras)s -- %(recipient)s < "%(message-file)s"'
+CMD = 'mutt -s "%(subject)s" %(extras)s -- "%(recipient)s" < "%(message-file)s"'
 CC = '-c "%(cc)s" '
 BCC = '-b "%(bcc)s" '
 ATTACH = '-a %(attachment)s '
