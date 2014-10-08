@@ -19,6 +19,8 @@ CMD = 'mutt -s "%(subject)s" %(extras)s -- "%(recipient)s" < "%(message-file)s"'
 CC = '-c "%(cc)s" '
 BCC = '-b "%(bcc)s" '
 ATTACH = '-a %(attachment)s '
+FROM_ADD = '-e "unmy_hdr from; my_hdr From: %(fromadd)s" '
+FROM_NAME = '-e "unset realname; set realname="%(fromname)s"" '
 
 def log(message):
     """ Prints given message if VERBOSE is set to True.
@@ -48,7 +50,7 @@ def personalize_message(message, personalizations):
 
 def get_options(filename):
     """ Parses config file for subject, cc, bcc, attachment,
-        returns these as a 4-tuple, in that order.
+        fromadd, fromname returns these as a 6-tuple, in that order.
     """
 
     config = ConfigParser()
@@ -59,8 +61,10 @@ def get_options(filename):
     cc = config.get(CONFIG_SECTION, 'cc')
     bcc = config.get(CONFIG_SECTION, 'bcc')
     attachment = config.get(CONFIG_SECTION, 'attachment')
+    fromadd = config.get(CONFIG_SECTION, 'fromadd')
+    fromname = config.get(CONFIG_SECTION, 'fromname')
 
-    return (subject, cc, bcc, attachment)
+    return (subject, cc, bcc, attachment, fromadd, fromname)
 
 def get_personalizations(filename):
     """ Reads a CSV file with addresses and personalizations.
@@ -75,7 +79,7 @@ def get_personalizations(filename):
         personalizations.append(row)
     return personalizations
 
-def send_message(message, subject, recipient, cc='', bcc='', attachment=''):
+def send_message(message, subject, recipient, cc='', bcc='', attachment='', fromadd='', fromname=''):
     """ Sends message with given options.
     """
 
@@ -92,6 +96,10 @@ def send_message(message, subject, recipient, cc='', bcc='', attachment=''):
         extras += BCC % {'bcc': bcc}
     if attachment != '':
         extras += ATTACH % {'attachment': attachment}
+    if fromadd != '':
+        extras += FROM_ADD % {'fromadd': fromadd}
+    if fromname != '':
+        extras += FROM_NAME % {'fromname': fromname}
 
     run = CMD % \
             {'subject'      : subject, \
@@ -105,7 +113,7 @@ def send_message(message, subject, recipient, cc='', bcc='', attachment=''):
 def multimail(config_filename, personalization_filename, message_filename):
     message = get_message(message_filename)
     personalizations = get_personalizations(personalization_filename)
-    (subject, cc, bcc, attachment) = get_options(config_filename)
+    (subject, cc, bcc, attachment, fromadd, fromname) = get_options(config_filename)
 
     for recipient in personalizations:
         # The first column for each recipient is the email address.
@@ -119,7 +127,7 @@ def multimail(config_filename, personalization_filename, message_filename):
             attachment = personalize_message(attachment, recipient)
 
         # Send the message!
-        send_message(personalized_message, subject, address, cc, bcc, attachment)
+        send_message(personalized_message, subject, address, cc, bcc, attachment, fromadd, fromname)
         
 def main():
     config_file = DEFAULT_CONFIG_FILE
