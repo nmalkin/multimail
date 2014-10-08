@@ -57,6 +57,8 @@ It follows the following format:
     cc: email@example.com
     bcc: email@example.com
     attachment: picture.jpg
+    fromadd: test@example.com
+    fromname: Testing_123
 
 A field need not be filled out, but its label must appear.
 (e.g., you can have the attachment field be empty,
@@ -67,6 +69,8 @@ __the attachment field supports the same placeholders as the message__.
 So if you want user-specific attachments, just use a placeholder in the
 configuration file and put the filename (or portion of it) in the respective
 column of the recipients file.
+
+The 'fromname:' option can't (at the moment) have spaces in; so "Testing_123" works, "Testing 123" doesn't.
 
 
 ### How to send ###
