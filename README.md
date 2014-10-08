@@ -28,6 +28,7 @@ Examples of each type of file are located in the `example` directory.
 The message file contains the body of your message as plain-text. For portions
 of the text that you want to customize, insert a placeholder of the form <?>
 where the ? is the number of the item to substitute in (start the numbering at 1).
+
 For example:
 
     Hello, <1>. Are we still on for <2>?
@@ -35,15 +36,17 @@ For example:
 If you want to include the recipient's email address, use the placeholder `<0>`.
 
 #### Recipients file ####
-The recipients file contains the addresses of the recipients and recipient-
-specific information. Fields are separated by commas, and each line denotes
-a new recipient. The first column must contain the recipient's email address.
+The recipients file contains the addresses of the recipients and
+recipient-specific information. Fields are separated by commas, and each line
+denotes a new recipient. The first column must contain the recipient's email
+address.
+
 For example:
 
     alice@example.com,Alice,"dinner on Monday"
     bob@example.com,Bob,"lunch on Tuesday"
 
-Note that strings containing spaces must be enclosed on quotes. (The quotes 
+Note that strings containing spaces must be enclosed in quotes. (The quotes 
 won't be part of the message sent.) There is currently no support for newlines.
 
 #### Configuration file ####
