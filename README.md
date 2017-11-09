@@ -60,6 +60,9 @@ It follows the following format:
     cc: email@example.com
     bcc: email@example.com
     attachment: picture.jpg
+    muttrc: temp_muttrc
+    fromadd: test@example.com
+    fromname: Testing_123
 
 A field need not be filled out, but its label must appear.
 (e.g., you can have the attachment field be empty,
@@ -71,12 +74,10 @@ So if you want user-specific attachments, just use a placeholder in the
 configuration file and put the filename (or portion of it) in the respective
 column of the recipients file.
 
-##### Need more customization?
+An alternative .muttrc file can be specified (equivalent of calling mutt with -F temp_muttrc).
 
-If you want to customize more things, like the from name and address,
-as well as your .muttrc, check out the
-[`advanced`](https://github.com/nmalkin/multimail/tree/advanced) branch
-of this repo.
+The 'fromname:' option can't (at the moment) have spaces in; so "Testing_123" works, "Testing 123" doesn't.
+
 
 ### How to send ###
 To send a batch of message, create the files described above and run the script.
